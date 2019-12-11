@@ -134,8 +134,8 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import FramevuerkLogo from '~/components/FramevuerkLogo.vue'
+import Logo from '~/components/Logo'
+import FramevuerkLogo from '~/components/FramevuerkLogo'
 
 export default {
   components: {

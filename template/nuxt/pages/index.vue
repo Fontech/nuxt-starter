@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Logo from '~/components/Logo'
 
 export default {
   components: {

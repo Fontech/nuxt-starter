@@ -1,26 +1,9 @@
-<%_ if (esm) { _%>
-  <%_ if (ui === 'vuetify') { _%>
+<%_ if (ui === 'vuetify') { _%>
 import colors from 'vuetify/es5/util/colors'
-  <%_ } _%>
-<%_ } else { _%>
-  <%_ if (server === 'adonis') { _%>
-const { resolve } = require('path')
-  <%_ } _%>
-  <%_ if (ui === 'vuetify') { _%>
-const colors = require('vuetify/es5/util/colors').default
-  <%_ } _%>
 <%_ } _%>
 
-<%_ if (esm) { _%>
 export default {
-<%_ } else { _%>
-module.exports = {
-<%_ } _%>
-  mode: '<%= mode %>',
-  <%_ if (server === 'adonis') { _%>
-  dev: process.env.NODE_ENV === 'development',
-  srcDir: resolve(__dirname, '..', 'resources'),
-  <%_ } _%>
+  mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -83,14 +66,10 @@ module.exports = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    <%_ if (eslint) { _%>
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    <%_ } _%>
-    <%_ if (stylelint) { _%>
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    <%_ } _%>
     <%_ if (ui === 'tailwind') { _%>
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
@@ -112,26 +91,18 @@ module.exports = {
     // Doc: https://buefy.github.io/#/documentation
     'nuxt-buefy',
     <%_ } _%>
-    <%_ if (axios) { _%>
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    <%_ } _%>
-    <%_ if (pwa) { _%>
     '@nuxtjs/pwa',
-    <%_ } _%>
-    <%_ if (dotenv) { _%>
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
-    <%_ } _%>
+    '@nuxtjs/dotenv'
   ],
-  <%_ if (axios) { _%>
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
   },
-  <%_ } _%>
   <%_ if (ui === 'vuetify') { _%>
   /*
   ** vuetify module configuration
