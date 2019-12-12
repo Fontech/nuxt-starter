@@ -36,7 +36,9 @@ export default {
   ** Global CSS
   */
   css: [
-    <%_ if (ui === 'element-ui') { _%>
+    <%_ if (ui === 'buefy') { _%>
+    '~/assets/styles/buefy.scss'
+    <%_ } else if (ui === 'element-ui') { _%>
     'element-ui/lib/theme-chalk/index.css'
     <%_ } else if (ui === 'iview') { _%>
     'iview/dist/styles/iview.css'
@@ -97,6 +99,14 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv'
   ],
+  <%_ if (ui === 'buefy') { _%>
+  /*
+   ** Buefy options
+   */
+  buefy: {
+    css: false
+  },
+  <%_ } _%>
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

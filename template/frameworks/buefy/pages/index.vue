@@ -1,53 +1,25 @@
-<template>
-  <section class="section">
-    <div class="columns is-mobile">
-      <card
-        title="Free"
-        icon="github-circle"
-      >
-        Open source on <a href="https://github.com/buefy/buefy">
-          GitHub
-        </a>
-      </card>
-
-      <card
-        title="Responsive"
-        icon="cellphone-link"
-      >
-        <b class="has-text-grey">
-          Every
-        </b> component is responsive
-      </card>
-
-      <card
-        title="Modern"
-        icon="alert-decagram"
-      >
-        Built with <a href="https://vuejs.org/">
-          Vue.js
-        </a> and <a href="http://bulma.io/">
-          Bulma
-        </a>
-      </card>
-
-      <card
-        title="Lightweight"
-        icon="arrange-bring-to-front"
-      >
-        No other internal dependency
-      </card>
-    </div>
-  </section>
+<template lang="pug">
+  section.section
+    .columns.is-mobile
+      card(title="Free", icon="github-circle")
+        | Open source on&nbsp;
+        a(href="https://github.com/buefy/buefy") GitHub
+      card(title="Responsive", icon="cellphone-link")
+        b.has-text-grey Every
+        |  component is responsive
+      card(title="Modern", icon="alert-decagram")
+        | Built with&nbsp;
+        a(href="https://vuejs.org/") Vue.js
+        | &nbsp;and&nbsp;
+        a(href="http://bulma.io/") Bulma
+      card(title="Lightweight", icon="arrange-bring-to-front")
+        | No other internal dependency
 </template>
 
 <script>
-import Card from '~/components/Card'
+  import Card from '~/components/Card'
 
-export default {
-  name: 'HomePage',
-
-  components: {
-    Card
+  export default {
+    components: { Card }
   }
-}
 </script>
