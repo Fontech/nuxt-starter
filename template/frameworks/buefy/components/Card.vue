@@ -5,7 +5,7 @@
         p.card-header-title.has-text-grey {{ title }}
       .card-content
         .content.has-text-centered
-          b-icon(:icon="icon", size="is-large", type="is-primary")
+          b-icon(:icon="icon", :pack="iconPack", size="is-large", type="is-primary")
       footer.card-footer
         .card-footer-item
           span
@@ -22,6 +22,10 @@
       icon: {
         type: String,
         required: true
+      },
+      iconPack: {
+        type: String,
+        default: 'fas'
       }
     }
   }

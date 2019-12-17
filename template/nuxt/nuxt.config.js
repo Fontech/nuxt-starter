@@ -36,19 +36,18 @@ export default {
   ** Global CSS
   */
   css: [
-    <%_ if (ui === 'buefy') { _%>
-    '~/assets/styles/buefy.scss'
-    <%_ } else if (ui === 'element-ui') { _%>
-    'element-ui/lib/theme-chalk/index.css'
+    <%_ if (ui === 'element-ui') { _%>
+    'element-ui/lib/theme-chalk/index.css',
     <%_ } else if (ui === 'iview') { _%>
-    'iview/dist/styles/iview.css'
+    'iview/dist/styles/iview.css',
     <%_ } else if (ui === 'ant-design-vue') { _%>
-    'ant-design-vue/dist/antd.css'
+    'ant-design-vue/dist/antd.css',
     <%_ } else if (ui === 'tachyons') { _%>
-    'tachyons/css/tachyons.css'
+    'tachyons/css/tachyons.css',
     <%_ } else if (ui === 'framevuerk') { _%>
-    'framevuerk/dist/framevuerk-nuxt.min.css'
+    'framevuerk/dist/framevuerk-nuxt.min.css',
     <%_ } _%>
+    '~/assets/styles/main.scss'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -93,6 +92,7 @@ export default {
     // Doc: https://buefy.github.io/#/documentation
     'nuxt-buefy',
     <%_ } _%>
+    'nuxt-fontawesome',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
@@ -104,9 +104,23 @@ export default {
    ** Buefy options
    */
   buefy: {
-    css: false
+    css: false,
+    materialDesignIcons: false,
+    defaultIconPack: 'fas',
+    defaultIconComponent: 'font-awesome-icon'
   },
   <%_ } _%>
+  /*
+   ** Fontawesome options
+   */
+  fontawesome: {
+    component: 'font-awesome-icon',
+    imports: [
+      { set: '@fortawesome/free-solid-svg-icons', icons: ['fas'] },
+      { set: '@fortawesome/free-brands-svg-icons', icons: ['fab'] },
+      { set: '@fortawesome/free-regular-svg-icons', icons: ['far'] }
+    ]
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

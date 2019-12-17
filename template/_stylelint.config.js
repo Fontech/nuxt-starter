@@ -14,6 +14,7 @@ module.exports = {
     'block-closing-brace-newline-after': ['always', {
       'ignoreAtRules': ['if', 'else']
     }],
+    'at-rule-no-unknown': null,
     'at-rule-empty-line-before': ['always', {
       'except': [
         'blockless-after-same-name-blockless',

@@ -1,0 +1,5 @@
+@for $i from 1 through 20 {
+  .svg-inline--fa.fa-w-#{$i} {
+    height: #{$i * .0625em};
+  }
+}
