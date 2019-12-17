@@ -41,8 +41,9 @@ module.exports = {
       patterns: {
         gitignore: '.gitignore',
         '_package.json': 'package.json',
+        '_.puglintrc.js': '.puglintrc.js',
         '_.eslintrc.js': '.eslintrc.js',
-        '_stylelint.config.js': 'stylelint.config.js'
+        '_.stylelintrc.js': '.stylelintrc.js'
       }
     }, {
       type: 'modify',

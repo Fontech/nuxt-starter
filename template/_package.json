@@ -67,6 +67,7 @@
     "jest": "^24.1.0",
     "node-sass": "^4.13.0",
     "nuxt-fontawesome": "^0.4.0",
+    "nuxt-puglint-module": "^0.0.1",
     "prettier": "^1.16.4",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
