@@ -29,6 +29,30 @@ module.exports = {
       type: 'add',
       files: '**',
       templateDir: 'template/nuxt'
+    }, {
+      type: 'add',
+      files: '**',
+      templateDir: 'template/frameworks/jest'
+    }, {
+      type: 'add',
+      files: '*'
+    }, {
+      type: 'move',
+      patterns: {
+        gitignore: '.gitignore',
+        '_package.json': 'package.json',
+        '_.eslintrc.js': '.eslintrc.js',
+        '_stylelint.config.js': 'stylelint.config.js'
+      }
+    }, {
+      type: 'modify',
+      files: 'package.json',
+      handler (data) {
+        delete data.scripts['']
+        delete data.dependencies['']
+        delete data.devDependencies['']
+        return data
+      }
     }]
 
     if (this.answers.ui !== 'none') {
@@ -39,37 +63,12 @@ module.exports = {
       })
     }
 
-    actions.push({
-      type: 'add',
-      files: '**',
-      templateDir: 'template/frameworks/jest'
-    })
-
-    actions.push({
-      type: 'add',
-      files: '*'
-    })
-
-    actions.push({
-      type: 'move',
-      patterns: {
-        gitignore: '.gitignore',
-        '_package.json': 'package.json',
-        '_.eslintrc.js': '.eslintrc.js',
-        '_stylelint.config.js': 'stylelint.config.js'
-      }
-    })
-
-    actions.push({
-      type: 'modify',
-      files: 'package.json',
-      handler (data) {
-        delete data.scripts['']
-        delete data.dependencies['']
-        delete data.devDependencies['']
-        return data
-      }
-    })
+    if (this.answers.ui === 'buefy') {
+      actions.push({
+        type: 'remove',
+        files: 'components/Logo.vue',
+      })
+    }
 
     return actions
   },
