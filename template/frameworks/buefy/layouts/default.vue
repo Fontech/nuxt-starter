@@ -1,23 +1,25 @@
 <template lang="pug">
-  div
-    nav.navbar.header.has-shadow.is-primary(role="navigation", aria-label="main navigation")
-      .navbar-brand
-        a.navbar-item(href="/")
-          img(src="~assets/buefy.png", alt="Buefy", height="28")
-        .navbar-burger
-          span
-          span
-          span
-    section.main-content.columns
-      aside.column.is-2.section
-        p.menu-label.is-hidden-touch General
-        ul.menu-list
-          li(:key="key", v-for="(item, key) of items")
-            nuxt-link(:to="item.to", exact-active-class="is-active")
-              b-icon(:icon="item.icon")
-              | &nbsp;{{ item.title }}
-      .container.column.is-10
-        nuxt
+  #app
+    b-navbar(fixed-top, shadow)
+      template(slot="brand")
+        b-navbar-item(tag="router-link", to="/")
+          img(src="~/assets/buefy.png", alt="Lightweight UI components for Vue.js based on Bulma", height="28")
+      template(slot="start")
+        b-navbar-item(tag="router-link", :to="item.to", exact-active-class="is-active", :key="key", v-for="(item, key) of items")
+          | {{ item.title }}
+        b-navbar-dropdown(label="Info")
+          b-navbar-item(href="#")
+            | About
+          b-navbar-item(href="#")
+            | Contact
+      template(slot="end")
+        b-navbar-item(tag="div")
+          .buttons
+            a.button.is-primary
+              strong Sign up
+            a.button.is-light
+              | Log in
+    nuxt
 </template>
 
 <script>
@@ -25,16 +27,8 @@
     data () {
       return {
         items: [
-          {
-            title: 'Home',
-            icon: 'home',
-            to: { name: 'index' }
-          },
-          {
-            title: 'Inspire',
-            icon: 'lightbulb',
-            to: { name: 'inspire' }
-          }
+          { title: 'Home', to: '/' },
+          { title: 'Inspire', to: '/inspire' }
         ]
       }
     }

@@ -34,18 +34,18 @@ module.exports = [
     type: 'list',
     pageSize: 15,
     choices: [
-      { name: 'None', value: 'none' },
-      { name: 'Ant Design Vue', value: 'ant-design-vue' },
-      { name: 'Bootstrap Vue', value: 'bootstrap' },
       { name: 'Buefy', value: 'buefy' },
       { name: 'Bulma', value: 'bulma' },
+      { name: 'Bootstrap Vue', value: 'bootstrap' },
       { name: 'Element', value: 'element-ui' },
-      { name: 'Framevuerk', value: 'framevuerk' },
-      { name: 'iView', value: 'iview' },
-      { name: 'Tachyons', value: 'tachyons' },
+      { name: 'Vuetify.js', value: 'vuetify' },
       { name: 'Tailwind CSS', value: 'tailwind' },
-      { name: 'Vuetify.js', value: 'vuetify' }
+      { name: 'Ant Design Vue', value: 'ant-design-vue' },
+      { name: 'Framevuerk', value: 'framevuerk' },
+      { name: 'Tachyons', value: 'tachyons' },
+      { name: 'iView', value: 'iview' },
+      { name: 'None', value: 'none' }
     ],
-    default: 'none'
+    default: 'Buefy'
   }
 ]
