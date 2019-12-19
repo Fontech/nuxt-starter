@@ -1,6 +1,82 @@
+@import "variables";
+@import "mixins";
 @import "bulma/sass/utilities/_all";
 @import "bulma";
 @import "buefy/src/scss/buefy";
+
+@if type-of($custom-hover-colors) != "map" {
+  $custom-hover-colors: ();
+}
+
+@if type-of($custom-active-colors) != "map" {
+  $custom-active-colors: ();
+}
+
+$button-colors: ();
+
+@each $name, $pair in $colors {
+  $color: nth($pair, 1);
+  $color-invert: nth($pair, 2);
+
+  $hover-color: darken($color, 2.5%);
+  $hover-color-invert: darken($color-invert, 2.5%);
+
+  @if map-has-key($custom-hover-colors, $name) {
+    $config: map-get($custom-hover-colors, $name);
+
+    @if type-of($config) == "color" {
+      $hover-color: $config;
+    } @else {
+      $hover-color: nth($config, 1);
+      $hover-color-invert: nth($config, 2);
+    }
+  }
+
+  $active-color: darken($hover-color, 2.5%);
+  $active-color-invert: darken($hover-color-invert, 2.5%);
+
+  @if map-has-key($custom-active-colors, $name) {
+    $config: map-get($custom-active-colors, $name);
+
+    @if type-of($config) == "color" {
+      $active-color: $config;
+    } @else {
+      $active-color: nth($config, 1);
+      $active-color-invert: nth($config, 2);
+    }
+  }
+
+  $button-colors: map-merge($button-colors, ($name: ($hover-color, $active-color, $hover-color-invert, $active-color-invert)));
+}
+
+.button {
+  @each $name, $pair in $button-colors {
+    $hover-color: nth($pair, 1);
+    $active-color: nth($pair, 2);
+    $hover-color-invert: nth($pair, 3);
+    $active-color-invert: nth($pair, 4);
+
+    &.is-#{$name} {
+      &:hover, &.is-hovered {
+        background-color: $hover-color;
+      }
+
+      &:active, &.is-active {
+        background-color: $active-color;
+      }
+
+      &.is-inverted {
+        &:hover, &.is-hovered {
+          background-color: $hover-color-invert;
+        }
+
+        &:active, &.is-active {
+          background-color: $active-color-invert;
+        }
+      }
+    }
+  }
+}
 
 .loading-overlay {
   z-index: 1;
