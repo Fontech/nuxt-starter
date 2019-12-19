@@ -35,7 +35,6 @@ module.exports = [
     pageSize: 15,
     choices: [
       { name: 'Buefy', value: 'buefy' },
-      { name: 'Bulma', value: 'bulma' },
       { name: 'Bootstrap Vue', value: 'bootstrap' },
       { name: 'Element', value: 'element-ui' },
       { name: 'Vuetify.js', value: 'vuetify' },

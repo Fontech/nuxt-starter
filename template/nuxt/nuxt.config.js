@@ -86,9 +86,6 @@ export default {
     <%_ if (ui === 'bootstrap') { _%>
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
-    <%_ } else if (ui === 'bulma') { _%>
-    // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma',
     <%_ } else if (ui === 'buefy') { _%>
     // Doc: https://buefy.github.io/#/documentation
     'nuxt-buefy',
@@ -155,15 +152,7 @@ export default {
   ** Build configuration
   */
   build: {
-    <%_ if (ui === 'bulma') { _%>
-    postcss: {
-      preset: {
-        features: {
-          customProperties: false
-        }
-      }
-    },
-    <%_ } else if (ui === 'element-ui') { _%>
+    <%_ if (ui === 'element-ui') { _%>
     transpile: [/^element-ui/],
     <%_ } _%>
     /*

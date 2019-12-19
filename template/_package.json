@@ -22,9 +22,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
-    <%_ if (ui === 'bulma') { _%>
-    "@nuxtjs/bulma": "^1.2.1",
-    <%_ } else if (ui === 'ant-design-vue') { _%>
+    <%_ if (ui === 'ant-design-vue') { _%>
     "ant-design-vue": "^1.1.10",
     <%_ } else if (ui === 'bootstrap') { _%>
     "bootstrap-vue": "^2.0.0",
