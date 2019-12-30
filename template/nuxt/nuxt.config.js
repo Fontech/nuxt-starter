@@ -1,3 +1,5 @@
+const StylintWebpackPlugin = require('@startingpoint/stylint-webpack-plugin');
+
 <%_ if (ui === 'vuetify') { _%>
 import colors from 'vuetify/es5/util/colors'
 <%_ } _%>
@@ -159,6 +161,11 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      if (ctx.isDev && ctx.isClient) {
+        config.plugins.push(new StylintWebpackPlugin({
+          files: ['./pages', './assets'],
+        }));
+      }
     }
   }
 }
