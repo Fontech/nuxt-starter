@@ -46,5 +46,15 @@ module.exports = [
       { name: 'None', value: 'none' }
     ],
     default: 'Buefy'
+  },
+  {
+    name: 'isAddStylint',
+    message: 'Would like to add Stylint?',
+    choices: [
+      { name: 'Yes', value: 'yes' },
+      { name: 'No', value: 'no' }
+    ],
+    type: 'list',
+    default: 'yes'
   }
 ]
