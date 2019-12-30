@@ -1,69 +1,8 @@
-vars = json('./variables.json', { hash: true });
+json('./variables.json');
 
-$primary = $blue;
-$info = $cyan;
-$success = $green;
-$warning = $yellow;
-$danger = $red;
-$light = $white;
-$dark = $black;
+desktop = desktop-minus-gap + (2 * gap);
+widescreen = widescreen-minus-gap + (2 * gap);
+fullhd = fullhd-minus-gap + (2 * gap);
 
-$custom-colors = null;
-$custom-shades = null;
-
-$custom-hover-colors = null;
-$custom-active-colors = null;
-
-// General colors
-$scheme-main = $white;
-$scheme-main-bis = $white-bis;
-$scheme-main-ter = $white-ter;
-$scheme-invert = $black;
-$scheme-invert-bis = $black-bis;
-$scheme-invert-ter = $black-ter;
-
-$background = $white;
-
-$border = $grey-lighter;
-$border-hover = $grey-light;
-$border-light = $grey-lightest;
-$border-light-hover = $grey-light;
-
-// Text colors
-$text = $deep-sky-blue;
-$text-light = $grey;
-$text-strong = $grey-darker;
-
-// Code colors
-$code = $red;
-$code-background = $background;
-
-$pre = $text;
-$pre-background = $background;
-
-// Link colors
-$link = $blue;
-$link-visited = $purple;
-
-$link-hover = $grey-darker;
-$link-hover-border = $grey-light;
-
-$link-focus = $grey-darker;
-$link-focus-border = $blue;
-
-$link-active = $grey-darker;
-$link-active-border = $grey-dark;
-
-$family-primary = $family-sans-serif;
-$family-secondary = $family-sans-serif;
-$family-code = $family-monospace;
-
-$size-small = $size-7;
-$size-normal = $size-6;
-$size-medium = $size-5;
-$size-large = $size-4;
-
-// Responsiveness
-$desktop = "%s + (2 * %s)" % ($desktop-minus-gap $gap);
-$widescreen = "%s + (2 * %s)" % ($widescreen-minus-gap $gap);
-$fullhd = "%s + (2 * %s)" % ($fullhd-minus-gap $gap);
+// Configures
+navbar-h = 60px
