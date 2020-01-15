@@ -1,4 +1,5 @@
 const StylintWebpackPlugin = require('@startingpoint/stylint-webpack-plugin');
+const jsonImporter = require('node-sass-json-importer');
 
 <%_ if (ui === 'vuetify') { _%>
 import colors from 'vuetify/es5/util/colors'
@@ -166,6 +167,8 @@ export default {
           files: ['./pages', './assets'],
         }));
       }
+      ctx.loaders.scss.sassOptions = {};
+      ctx.loaders.scss.sassOptions.importer = jsonImporter();
     }
   }
 }

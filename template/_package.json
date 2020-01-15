@@ -22,6 +22,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "node-sass-json-importer": "^4.1.0",
     <%_ if (ui === 'ant-design-vue') { _%>
     "ant-design-vue": "^1.1.10",
     <%_ } else if (ui === 'bootstrap') { _%>
