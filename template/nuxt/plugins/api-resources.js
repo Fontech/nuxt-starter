@@ -15,15 +15,24 @@ class Parser {
     this.configs = configs
   }
   parse (data, type) {
-    const isParseToQuery = type === 'query'
     return Object.keys(data).reduce((result, key) => {
       const { default: defaultValue, required } = data[key]
       const value = this.configs[key]
-      if ((value || required) && !isParseToQuery) {
+      if (value || required) {
         result[key] = value || defaultValue
       }
-      return isParseToQuery ? `${result}${result ? '&' : '?'}${key}=${value || defaultValue}` : result
-    }, isParseToQuery ? '' : {})
+      return result
+    }, {})
+  }
+  parseQuery (data) {
+    return Object.keys(data).reduce((result, key) => {
+      const { default: defaultValue, required } = data[key]
+      const value = this.configs[key]
+      if (!required && !value) {
+        return result
+      }
+      return `${result}${result ? '&' : '?'}${key}=${value || defaultValue}`
+    }, '')
   }
 }
 
@@ -32,7 +41,7 @@ const transResource = (resource, configs) => {
   const parser = new Parser(configs)
   return {
     method,
-    path: path + parser.parse(query, 'query'),
+    path: path + parser.parseQuery(query),
     headers: parser.parse(headers),
     params: parser.parse(params)
   }
