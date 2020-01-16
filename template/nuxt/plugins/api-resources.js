@@ -39,13 +39,17 @@ const transResource = (resource, configs) => {
 }
 
 export default function ({ $axios }, inject) {
-  const api = (action, configs) => {
+  const api = async (action, configs) => {
     const resource = getResource(action)
     if (!resource) {
-      return Promise.reject(new Error('Resource not found!'))
+      throw new Error('Resource not found!')
     }
     const { method, path, headers, params } = transResource(resource, configs)
-    return $axios(path, { data: params, method, headers })
+    try {
+      return await $axios(path, { data: params, method, headers })
+    } catch (error) {
+      throw new Error(error)
+    }
   }
   inject('api', api)
 }
