@@ -14,16 +14,6 @@ class Parser {
       return result
     }, {})
   }
-  parseQuery (data) {
-    return Object.keys(data).reduce((result, key) => {
-      const { default: defaultValue, required } = data[key]
-      const value = this.configs[key]
-      if (!required && !value) {
-        return result
-      }
-      return `${result}${result ? '&' : '?'}${key}=${value || defaultValue}`
-    }, '')
-  }
   parsePath (path) {
     return path.replace(/{(\w+?)}/g, (keyWithBlock) => {
       const key = keyWithBlock.match(/([a-z]+)/g)[0]
@@ -33,13 +23,14 @@ class Parser {
 }
 
 const mergeConfig = (apiConfig, configs) => {
-  const { method, path, headers, query, params } = apiConfig
+  const { method, path, headers, params, data } = apiConfig
   const parser = new Parser(configs)
   return {
     method,
-    path: parser.parsePath(path) + parser.parseQuery(query),
+    path: parser.parsePath(path),
+    params: parser.parse(params),
     headers: parser.parse(headers),
-    params: parser.parse(params)
+    data: parser.parse(data)
   }
 }
 
@@ -49,9 +40,9 @@ export default function ({ $axios }, inject) {
     if (!apiConfig) {
       throw new Error(`API "${action}" not found!`)
     }
-    const { method, path, headers, params } = mergeConfig(apiConfig, configs)
+    const { method, path, headers, data, params } = mergeConfig(apiConfig, configs)
     try {
-      return await $axios.$request({ url: path, data: params, method, headers })
+      return await $axios.$request({ url: path, data, method, headers, params })
     } catch (error) {
       throw new Error(error)
     }
