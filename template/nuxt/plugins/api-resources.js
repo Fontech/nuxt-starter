@@ -14,7 +14,7 @@ class Parser {
   constructor (configs) {
     this.configs = configs
   }
-  parse (data, type) {
+  parse (data) {
     return Object.keys(data).reduce((result, key) => {
       const { default: defaultValue, required } = data[key]
       const value = this.configs[key]
