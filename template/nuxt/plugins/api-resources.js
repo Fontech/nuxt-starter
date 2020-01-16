@@ -55,7 +55,7 @@ export default function ({ $axios }, inject) {
     }
     const { method, path, headers, params } = transResource(resource, configs)
     try {
-      return await $axios({ url: path, data: params, method, headers })
+      return await $axios.$request({ url: path, data: params, method, headers })
     } catch (error) {
       throw new Error(error)
     }
