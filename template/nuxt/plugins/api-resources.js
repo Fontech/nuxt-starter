@@ -1,9 +1,8 @@
 const getResource = (action) => {
-  const actionArray = action.toLowerCase().split('_')
-  if (actionArray.length !== 2) {
+  const [model, method] = action.toLowerCase().split('_')
+  if (!model || !method) {
     return null
   }
-  const [model, method] = actionArray
   try {
     return require(`~/config/api/${model}/${method}`)
   } catch (error) {
