@@ -1,4 +1,4 @@
-const StylintWebpackPlugin = require('@startingpoint/stylint-webpack-plugin');
+import StylintWebpackPlugin from '@startingpoint/stylint-webpack-plugin';
 
 <%_ if (ui === 'vuetify') { _%>
 import colors from 'vuetify/es5/util/colors'
