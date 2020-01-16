@@ -4,7 +4,7 @@ const getResource = (action) => {
     return null
   }
   try {
-    return require(`~/config/api/${model}/${method}`)
+    return require(`~/static/api/${model}/${method}`)
   } catch (error) {
     return null
   }
