@@ -24,6 +24,12 @@ class Parser {
       return `${result}${result ? '&' : '?'}${key}=${value || defaultValue}`
     }, '')
   }
+  parsePath (path) {
+    return path.replace(/{(\w+?)}/g, (keyWithBlock) => {
+      const key = keyWithBlock.match(/([a-z]+)/g)[0]
+      return this.configs[key]
+    })
+  }
 }
 
 const mergeConfig = (apiConfig, configs) => {
@@ -31,7 +37,7 @@ const mergeConfig = (apiConfig, configs) => {
   const parser = new Parser(configs)
   return {
     method,
-    path: path + parser.parseQuery(query),
+    path: parser.parsePath(path) + parser.parseQuery(query),
     headers: parser.parse(headers),
     params: parser.parse(params)
   }
