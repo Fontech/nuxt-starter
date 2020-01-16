@@ -1,14 +1,4 @@
-const getResource = (action) => {
-  const [model, method] = action.toLowerCase().split('_')
-  if (!model || !method) {
-    return null
-  }
-  try {
-    return require(`~/static/apis/${model}/${method}`)
-  } catch (error) {
-    return null
-  }
-}
+import apiConfig from './api-config'
 
 class Parser {
   constructor (configs) {
@@ -49,7 +39,7 @@ const transResource = (resource, configs) => {
 
 export default function ({ $axios }, inject) {
   const api = async (action, configs) => {
-    const resource = getResource(action)
+    const resource = apiConfig[action]
     if (!resource) {
       throw new Error('Resource not found!')
     }

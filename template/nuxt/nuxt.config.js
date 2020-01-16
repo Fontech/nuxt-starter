@@ -55,7 +55,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/api-resources',
+    '@/plugins/api-resources/api',
     <%_ if (ui === 'element-ui') { _%>
     '@/plugins/element-ui'
     <%_ } else if (ui === 'iview') { _%>
