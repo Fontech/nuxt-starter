@@ -64,6 +64,7 @@ export default {
     <%_ } else if (ui === 'framevuerk') { _%>
     '@/plugins/framevuerk'
     <%_ } _%>
+    '@/plugins/api-resources'
   ],
   /*
   ** Nuxt.js dev-modules
