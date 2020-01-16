@@ -1,4 +1,4 @@
-import apiConfig from './api-config'
+import apiConfigs from './api-configs'
 
 class Parser {
   constructor (configs) {
@@ -26,8 +26,8 @@ class Parser {
   }
 }
 
-const transResource = (resource, configs) => {
-  const { method, path, headers, query, params } = resource
+const mergeConfig = (apiConfig, configs) => {
+  const { method, path, headers, query, params } = apiConfig
   const parser = new Parser(configs)
   return {
     method,
@@ -39,11 +39,11 @@ const transResource = (resource, configs) => {
 
 export default function ({ $axios }, inject) {
   const api = async (action, configs) => {
-    const resource = apiConfig[action]
-    if (!resource) {
-      throw new Error('Resource not found!')
+    const apiConfig = apiConfigs[action]
+    if (!apiConfig) {
+      throw new Error(`API "${action}" not found!`)
     }
-    const { method, path, headers, params } = transResource(resource, configs)
+    const { method, path, headers, params } = mergeConfig(apiConfig, configs)
     try {
       return await $axios.$request({ url: path, data: params, method, headers })
     } catch (error) {
