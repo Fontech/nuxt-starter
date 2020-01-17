@@ -1,46 +1,48 @@
 import apiDefinitions from '~/definitions/api'
 
 class AxiosConfig {
-  constructor (definition, requestItems) {
-    this.definition = definition
+  constructor (definitions, requestItems) {
+    this.definitions = definitions
     this.requestItems = requestItems
   }
-  getRequestValue (key) {
-    return this.requestItems[key]
-  }
-  isSetValueToData (key, data) {
-    const { required } = data[key]
-    return this.getRequestValue(key) || required
-  }
-  buildData (data) {
-    return Object.keys(data).reduce((result, key) => {
-      const { default: defaultValue } = data[key]
-      this.isSetValueToData(key, data) && (result[key] = this.getRequestValue(key) || defaultValue)
-      return result
-    }, {})
+  buildRequestItems (definitions) {
+    const result = {}
+    for (const key in definitions) {
+      const { required, default: defaultValue } = definitions[key]
+      const value = this.requestItems[key] || defaultValue
+
+      if (value) {
+        result[key] = value
+        continue
+      }
+      if (required) {
+        throw new Error(`${key} is required.`)
+      }
+    }
+    return result
   }
   buildPath (path) {
     return path.replace(/{(\w+?)}/g, (match, key) => this.requestItems[key])
   }
   build () {
-    const { method, path, headers, params, data } = this.definition
+    const { method, path, headers, params, data } = this.definitions
     return {
       method,
       url: this.buildPath(path),
-      params: this.buildData(params),
-      headers: this.buildData(headers),
-      data: this.buildData(data)
+      params: this.buildRequestItems(params),
+      headers: this.buildRequestItems(headers),
+      data: this.buildRequestItems(data)
     }
   }
 }
 
 export default function ({ $axios }, inject) {
   const api = (action, requestItems) => {
-    const definition = apiDefinitions[action]
-    if (!definition) {
+    const definitions = apiDefinitions[action]
+    if (!definitions) {
       throw new Error(`API "${action}" not found!`)
     }
-    const axiosConfig = new AxiosConfig(definition, requestItems)
+    const axiosConfig = new AxiosConfig(definitions, requestItems)
     return $axios.$request({ ...axiosConfig.build() })
   }
   inject('api', api)
