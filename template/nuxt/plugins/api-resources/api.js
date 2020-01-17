@@ -1,4 +1,4 @@
-import apiConfigs from './api-configs'
+import apiDefinitions from '~/definitions/api'
 
 class Parser {
   constructor (configs) {
@@ -36,11 +36,11 @@ const mergeConfig = (apiConfig, configs) => {
 
 export default function ({ $axios }, inject) {
   const api = async (action, configs) => {
-    const apiConfig = apiConfigs[action]
-    if (!apiConfig) {
+    const definition = apiDefinitions[action]
+    if (!definition) {
       throw new Error(`API "${action}" not found!`)
     }
-    const { method, path, headers, data, params } = mergeConfig(apiConfig, configs)
+    const { method, path, headers, data, params } = mergeConfig(definition, configs)
     try {
       return await $axios.$request({ url: path, data, method, headers, params })
     } catch (error) {
