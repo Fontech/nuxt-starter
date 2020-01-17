@@ -20,7 +20,7 @@ class AxiosConfig {
     const { method, path, headers, params, data } = this.definition
     return {
       method,
-      path: this.buildPath(path),
+      url: this.buildPath(path),
       params: this.buildData(params),
       headers: this.buildData(headers),
       data: this.buildData(data)
@@ -34,8 +34,8 @@ export default function ({ $axios }, inject) {
     if (!definition) {
       throw new Error(`API "${action}" not found!`)
     }
-    const { method, path, headers, data, params } = new AxiosConfig(definition, requestItems).build()
-    return $axios.$request({ url: path, data, method, headers, params })
+    const axiosConfig = new AxiosConfig(definition, requestItems)
+    return $axios.$request({ ...axiosConfig.build() })
   }
   inject('api', api)
 }
