@@ -1,4 +1,5 @@
 import StylintWebpackPlugin from '@startingpoint/stylint-webpack-plugin';
+import env from '~/config/env.js'
 
 <%_ if (ui === 'vuetify') { _%>
 import colors from 'vuetify/es5/util/colors'
@@ -169,5 +170,9 @@ export default {
         }));
       }
     }
+  },
+  env,
+  axios: {
+    baseURL: env.apiBaseUrl
   }
 }
