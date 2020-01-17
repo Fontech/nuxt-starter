@@ -5,11 +5,13 @@ class AxiosConfig {
     this.definition = definition
     this.requestItems = requestItems
   }
+  getRequestValue (key) {
+    return this.requestItems[key]
+  }
   buildData (data) {
     return Object.keys(data).reduce((result, key) => {
-      const { default: defaultValue, required } = data[key]
-      const value = this.requestItems[key];
-      (value || required) && (result[key] = value || defaultValue)
+      const { default: defaultValue, required } = data[key];
+      (this.getRequestValue(key) || required) && (result[key] = this.getRequestValue(key) || defaultValue)
       return result
     }, {})
   }
