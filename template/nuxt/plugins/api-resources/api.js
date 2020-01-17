@@ -22,7 +22,7 @@ class Parser {
   }
 }
 
-const mergeConfig = (apiConfig, configs) => {
+const buildAxiosConfig = (apiConfig, configs) => {
   const { method, path, headers, params, data } = apiConfig
   const parser = new Parser(configs)
   return {
@@ -40,7 +40,7 @@ export default function ({ $axios }, inject) {
     if (!definition) {
       throw new Error(`API "${action}" not found!`)
     }
-    const { method, path, headers, data: axiosData, params } = mergeConfig(definition, data)
+    const { method, path, headers, data: axiosData, params } = buildAxiosConfig(definition, data)
     return $axios.$request({ url: path, data: axiosData, method, headers, params })
   }
   inject('api', api)
