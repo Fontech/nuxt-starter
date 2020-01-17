@@ -8,10 +8,14 @@ class AxiosConfig {
   getRequestValue (key) {
     return this.requestItems[key]
   }
+  isSetValueToData (key, data) {
+    const { required } = data[key]
+    return this.getRequestValue(key) || required
+  }
   buildData (data) {
     return Object.keys(data).reduce((result, key) => {
-      const { default: defaultValue, required } = data[key];
-      (this.getRequestValue(key) || required) && (result[key] = this.getRequestValue(key) || defaultValue)
+      const { default: defaultValue } = data[key]
+      this.isSetValueToData(key, data) && (result[key] = this.getRequestValue(key) || defaultValue)
       return result
     }, {})
   }
