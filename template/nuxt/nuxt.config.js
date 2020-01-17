@@ -1,5 +1,5 @@
 import StylintWebpackPlugin from '@startingpoint/stylint-webpack-plugin';
-import env from '~/config/env.js'
+import env from '~/definitions/env.js'
 
 <%_ if (ui === 'vuetify') { _%>
 import colors from 'vuetify/es5/util/colors'
