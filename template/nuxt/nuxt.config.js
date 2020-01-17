@@ -56,6 +56,7 @@ export default {
   */
   plugins: [
     '@/plugins/api-resources/api',
+    '@/plugins/api-resources/axios-mock-adapter.js',
     <%_ if (ui === 'element-ui') { _%>
     '@/plugins/element-ui'
     <%_ } else if (ui === 'iview') { _%>
