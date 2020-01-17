@@ -20,8 +20,8 @@ class ActionAdapter {
 export default ({ $axios, app }) => {
   if (app.context.env.useMockApi) {
     const mockAdapter = new MockAdapter($axios)
+    const actionAdapter = new ActionAdapter(apiDefinitions, mockAdapter)
     for (const action in apiDefinitions) {
-      const actionAdapter = new ActionAdapter(apiDefinitions, mockAdapter)
       actionAdapter.mock(action)
     }
   }
