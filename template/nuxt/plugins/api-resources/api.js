@@ -7,10 +7,8 @@ class AxiosConfig {
   buildData (data) {
     return Object.keys(data).reduce((result, key) => {
       const { default: defaultValue, required } = data[key]
-      const value = this.configs[key]
-      if (value || required) {
-        result[key] = value || defaultValue
-      }
+      const value = this.configs[key];
+      (value || required) && (result[key] = value || defaultValue)
       return result
     }, {})
   }
