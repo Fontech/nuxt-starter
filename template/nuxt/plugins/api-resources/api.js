@@ -1,7 +1,8 @@
 import apiDefinitions from '~/definitions/api'
 
 class AxiosConfig {
-  constructor (requestItems) {
+  constructor (definition, requestItems) {
+    this.definition = definition
     this.requestItems = requestItems
   }
   buildData (data) {
@@ -15,17 +16,15 @@ class AxiosConfig {
   buildPath (path) {
     return path.replace(/{(\w+?)}/g, (match, key) => this.requestItems[key])
   }
-}
-
-const buildAxiosConfig = (definition, requestItems) => {
-  const { method, path, headers, params, data } = definition
-  const axiosConfig = new AxiosConfig(requestItems)
-  return {
-    method,
-    path: axiosConfig.buildPath(path),
-    params: axiosConfig.buildData(params),
-    headers: axiosConfig.buildData(headers),
-    data: axiosConfig.buildData(data)
+  build () {
+    const { method, path, headers, params, data } = this.definition
+    return {
+      method,
+      path: this.buildPath(path),
+      params: this.buildData(params),
+      headers: this.buildData(headers),
+      data: this.buildData(data)
+    }
   }
 }
 
@@ -35,7 +34,7 @@ export default function ({ $axios }, inject) {
     if (!definition) {
       throw new Error(`API "${action}" not found!`)
     }
-    const { method, path, headers, data, params } = buildAxiosConfig(definition, requestItems)
+    const { method, path, headers, data, params } = new AxiosConfig(definition, requestItems).build()
     return $axios.$request({ url: path, data, method, headers, params })
   }
   inject('api', api)
