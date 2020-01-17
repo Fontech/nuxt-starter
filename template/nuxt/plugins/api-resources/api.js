@@ -22,8 +22,8 @@ class Parser {
   }
 }
 
-const buildAxiosConfig = (apiConfig, configs) => {
-  const { method, path, headers, params, data } = apiConfig
+const buildAxiosConfig = (definition, configs) => {
+  const { method, path, headers, params, data } = definition
   const parser = new Parser(configs)
   return {
     method,
@@ -35,13 +35,13 @@ const buildAxiosConfig = (apiConfig, configs) => {
 }
 
 export default function ({ $axios }, inject) {
-  const api = (action, data) => {
+  const api = (action, configs) => {
     const definition = apiDefinitions[action]
     if (!definition) {
       throw new Error(`API "${action}" not found!`)
     }
-    const { method, path, headers, data: axiosData, params } = buildAxiosConfig(definition, data)
-    return $axios.$request({ url: path, data: axiosData, method, headers, params })
+    const { method, path, headers, data, params } = buildAxiosConfig(definition, configs)
+    return $axios.$request({ url: path, data, method, headers, params })
   }
   inject('api', api)
 }
