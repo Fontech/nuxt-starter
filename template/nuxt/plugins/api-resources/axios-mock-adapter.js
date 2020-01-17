@@ -6,14 +6,14 @@ class ActionAdapter {
     this.definitions = definitions
     this.mockAdapter = mockAdapter
   }
-  buildPath (path) {
+  convertPathVariablesToOne (path) {
     return path.replace(/{(\w+?)}/g, '1')
   }
   mock (action) {
     const { method, path, response } = this.definitions[action]
-    const mockMethod = method[0].toUpperCase() + method.slice(1).toLowerCase()
-    const mockPath = this.buildPath(path)
-    this.mockAdapter[`on${mockMethod}`](mockPath).reply(200, response)
+    const onWhichMethod = `on${method[0].toUpperCase() + method.slice(1).toLowerCase()}`
+    const mockedPath = this.convertPathVariablesToOne(path)
+    this.mockAdapter[onWhichMethod](mockedPath).reply(200, response)
   }
 }
 
