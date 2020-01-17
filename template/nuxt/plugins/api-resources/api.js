@@ -1,10 +1,10 @@
 import apiDefinitions from '~/definitions/api'
 
-class Parser {
+class AxiosConfig {
   constructor (configs) {
     this.configs = configs
   }
-  parse (data) {
+  buildData (data) {
     return Object.keys(data).reduce((result, key) => {
       const { default: defaultValue, required } = data[key]
       const value = this.configs[key]
@@ -14,7 +14,7 @@ class Parser {
       return result
     }, {})
   }
-  parsePath (path) {
+  buildPath (path) {
     return path.replace(/{(\w+?)}/g, (keyWithBlock) => {
       const key = keyWithBlock.match(/([a-z]+)/g)[0]
       return this.configs[key]
@@ -24,13 +24,13 @@ class Parser {
 
 const buildAxiosConfig = (definition, configs) => {
   const { method, path, headers, params, data } = definition
-  const parser = new Parser(configs)
+  const axiosConfig = new AxiosConfig(configs)
   return {
     method,
-    path: parser.parsePath(path),
-    params: parser.parse(params),
-    headers: parser.parse(headers),
-    data: parser.parse(data)
+    path: axiosConfig.buildPath(path),
+    params: axiosConfig.buildData(params),
+    headers: axiosConfig.buildData(headers),
+    data: axiosConfig.buildData(data)
   }
 }
 
