@@ -15,10 +15,7 @@ class AxiosConfig {
     }, {})
   }
   buildPath (path) {
-    return path.replace(/{(\w+?)}/g, (keyWithBlock) => {
-      const key = keyWithBlock.match(/([a-z]+)/g)[0]
-      return this.configs[key]
-    })
+    return path.replace(/{(\w+?)}/g, (match, key) => this.configs[key])
   }
 }
 
