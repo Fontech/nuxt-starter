@@ -8,7 +8,7 @@ class ActionAdapter {
   }
   mock (action) {
     const { method, path, response } = this.definitions[action]
-    const onWhichMethod = `on${method[0].toUpperCase() + method.slice(1).toLowerCase()}`
+    const onWhichMethod = `on${method.replace(/^(.)/, match => match.toUpperCase())}`
     this.mockAdapter[onWhichMethod](path).reply(200, response)
   }
 }
