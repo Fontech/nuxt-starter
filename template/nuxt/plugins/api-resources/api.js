@@ -42,16 +42,30 @@ class MockedAxiosConfig extends AxiosConfig {
   }
 }
 
+class ConfigMaker {
+  constructor (definitions, requestItems) {
+    this.definitions = definitions
+    this.requestItems = requestItems
+  }
+  createAxiosConfig (type) {
+    switch (type) {
+      case 'use-mock-api':
+        return new MockedAxiosConfig(this.definitions, this.requestItems)
+      default:
+        return new AxiosConfig(this.definitions, this.requestItems)
+    }
+  }
+}
+
 export default function ({ $axios, app }, inject) {
   const api = (action, requestItems) => {
     const definitions = apiDefinitions[action]
     if (!definitions) {
       throw new Error(`API "${action}" not found!`)
     }
-    let axiosConfig = new AxiosConfig(definitions, requestItems)
-    if (app.context.env.USE_MOCK_API) {
-      axiosConfig = new MockedAxiosConfig(definitions, requestItems)
-    }
+    const configMaker = new ConfigMaker(definitions, requestItems)
+    const type = app.context.env.USE_MOCK_API && 'use-mock-api'
+    const axiosConfig = configMaker.createAxiosConfig(type)
     return $axios.$request({ ...axiosConfig.build() })
   }
   inject('api', api)
