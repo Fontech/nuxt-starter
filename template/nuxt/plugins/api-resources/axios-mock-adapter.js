@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter'
 import apiDefinitions from '~/definitions/api'
 
-class ActionAdapter {
+class ActionDecorator {
   constructor (definitions, mockAdapter) {
     this.definitions = definitions
     this.mockAdapter = mockAdapter
@@ -18,8 +18,8 @@ export default ({ $axios, app }) => {
     return null
   }
   const mockAdapter = new MockAdapter($axios)
-  const actionAdapter = new ActionAdapter(apiDefinitions, mockAdapter)
+  const actionDecorator = new ActionDecorator(apiDefinitions, mockAdapter)
   for (const action in apiDefinitions) {
-    actionAdapter.mock(action)
+    actionDecorator.mock(action)
   }
 }
