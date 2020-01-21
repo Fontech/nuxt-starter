@@ -47,13 +47,12 @@ class AxiosConfigFactor {
     this.definitions = definitions
     this.requestItems = requestItems
   }
-  createAxiosConfig (type) {
-    switch (type) {
-      case 'use-mock-api':
-        return new MockedAxiosConfig(this.definitions, this.requestItems)
-      default:
-        return new AxiosConfig(this.definitions, this.requestItems)
+  createAxiosConfig (app) {
+    if (app.context.env.USE_MOCK_API) {
+      return new MockedAxiosConfig(this.definitions, this.requestItems)
     }
+
+    return new AxiosConfig(this.definitions, this.requestItems)
   }
 }
 
@@ -64,8 +63,7 @@ export default function ({ $axios, app }, inject) {
       throw new Error(`API "${action}" not found!`)
     }
     const axiosConfigFactor = new AxiosConfigFactor(definitions, requestItems)
-    const type = app.context.env.USE_MOCK_API && 'use-mock-api'
-    const axiosConfig = axiosConfigFactor.createAxiosConfig(type)
+    const axiosConfig = axiosConfigFactor.createAxiosConfig(app)
     return $axios.$request({ ...axiosConfig.build() })
   }
   inject('api', api)
