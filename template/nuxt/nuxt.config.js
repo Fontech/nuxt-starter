@@ -171,6 +171,9 @@ export default {
       }
     }
   },
+  env: {
+    USE_MOCK_API: process.argv.includes('--use-mock-api')
+  },
   axios: {
     baseURL: process.env.API_BASE_URL
   }
