@@ -1,15 +1,11 @@
 import apiDefinitions from '~/definitions/api'
 
 class AxiosConfig {
-  constructor (definitions, requestItems) {
-    this.definitions = definitions
-    this.requestItems = requestItems
-  }
-  buildRequestItems (definitions) {
+  buildRequestItems (definitions, requestItems) {
     const result = {}
     for (const key in definitions) {
       const { required, default: defaultValue } = definitions[key]
-      const value = this.requestItems[key] || defaultValue
+      const value = requestItems[key] || defaultValue
 
       if (value) {
         result[key] = value
@@ -24,14 +20,14 @@ class AxiosConfig {
   buildPath (path) {
     return path.replace(/{(\w+?)}/g, (match, key) => this.requestItems[key])
   }
-  build () {
-    const { method, path, headers, params, data } = this.definitions
+  build (definitions, requestItems) {
+    const { method, path, headers, params, data } = definitions
     return {
       method,
       url: this.buildPath(path),
-      params: this.buildRequestItems(params),
-      headers: this.buildRequestItems(headers),
-      data: this.buildRequestItems(data)
+      params: this.buildRequestItems(params, requestItems),
+      headers: this.buildRequestItems(headers, requestItems),
+      data: this.buildRequestItems(data, requestItems)
     }
   }
 }
@@ -42,18 +38,12 @@ class MockedAxiosConfig extends AxiosConfig {
   }
 }
 
-class AxiosConfigFactor {
-  constructor (definitions, requestItems) {
-    this.definitions = definitions
-    this.requestItems = requestItems
+function createAxiosConfig (app) {
+  if (app.context.env.USE_MOCK_API) {
+    return new MockedAxiosConfig()
   }
-  createAxiosConfig (app) {
-    if (app.context.env.USE_MOCK_API) {
-      return new MockedAxiosConfig(this.definitions, this.requestItems)
-    }
 
-    return new AxiosConfig(this.definitions, this.requestItems)
-  }
+  return new AxiosConfig()
 }
 
 export default function ({ $axios, app }, inject) {
@@ -62,9 +52,8 @@ export default function ({ $axios, app }, inject) {
     if (!definitions) {
       throw new Error(`API "${action}" not found!`)
     }
-    const axiosConfigFactor = new AxiosConfigFactor(definitions, requestItems)
-    const axiosConfig = axiosConfigFactor.createAxiosConfig(app)
-    return $axios.$request({ ...axiosConfig.build() })
+    const axiosConfig = createAxiosConfig(app)
+    return $axios.$request({ ...axiosConfig.build(definitions, requestItems) })
   }
   inject('api', api)
 }
