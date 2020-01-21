@@ -14,7 +14,7 @@ class ActionDecorator {
 }
 
 export default ({ $axios, app }) => {
-  if (!app.context.env.useMockApi) {
+  if (!app.context.env.USE_MOCK_API) {
     return null
   }
   const mockAdapter = new MockAdapter($axios)
