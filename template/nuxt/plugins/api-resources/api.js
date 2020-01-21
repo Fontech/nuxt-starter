@@ -36,13 +36,22 @@ class AxiosConfig {
   }
 }
 
-export default function ({ $axios }, inject) {
+class MockedAxiosConfig extends AxiosConfig {
+  buildPath (path) {
+    return path
+  }
+}
+
+export default function ({ $axios, app }, inject) {
   const api = (action, requestItems) => {
     const definitions = apiDefinitions[action]
     if (!definitions) {
       throw new Error(`API "${action}" not found!`)
     }
-    const axiosConfig = new AxiosConfig(definitions, requestItems)
+    let axiosConfig = new AxiosConfig(definitions, requestItems)
+    if (app.context.env.USE_MOCK_API) {
+      axiosConfig = new MockedAxiosConfig(definitions, requestItems)
+    }
     return $axios.$request({ ...axiosConfig.build() })
   }
   inject('api', api)
