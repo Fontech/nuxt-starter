@@ -1,4 +1,5 @@
 import StylintWebpackPlugin from '@startingpoint/stylint-webpack-plugin';
+require('dotenv').config()
 
 <%_ if (ui === 'vuetify') { _%>
 import colors from 'vuetify/es5/util/colors'
@@ -56,6 +57,7 @@ export default {
   */
   plugins: [
     '@/plugins/api-resources/api',
+    '@/plugins/api-resources/axios-mock-adapter.js',
     <%_ if (ui === 'element-ui') { _%>
     '@/plugins/element-ui'
     <%_ } else if (ui === 'iview') { _%>
@@ -168,5 +170,11 @@ export default {
         }));
       }
     }
+  },
+  env: {
+    USE_MOCK_API: !!process.env.USE_MOCK_API
+  },
+  axios: {
+    baseURL: process.env.API_BASE_URL
   }
 }

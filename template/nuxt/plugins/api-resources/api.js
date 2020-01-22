@@ -1,15 +1,11 @@
 import apiDefinitions from '~/definitions/api'
 
 class AxiosConfig {
-  constructor (definitions, requestItems) {
-    this.definitions = definitions
-    this.requestItems = requestItems
-  }
-  buildRequestItems (definitions) {
+  buildRequestItems (definitions, requestItems) {
     const result = {}
     for (const key in definitions) {
       const { required, default: defaultValue } = definitions[key]
-      const value = this.requestItems[key] || defaultValue
+      const value = requestItems[key] || defaultValue
 
       if (value) {
         result[key] = value
@@ -24,26 +20,40 @@ class AxiosConfig {
   buildPath (path) {
     return path.replace(/{(\w+?)}/g, (match, key) => this.requestItems[key])
   }
-  build () {
-    const { method, path, headers, params, data } = this.definitions
+  build (definitions, requestItems) {
+    const { method, path, headers, params, data } = definitions
     return {
       method,
       url: this.buildPath(path),
-      params: this.buildRequestItems(params),
-      headers: this.buildRequestItems(headers),
-      data: this.buildRequestItems(data)
+      params: this.buildRequestItems(params, requestItems),
+      headers: this.buildRequestItems(headers, requestItems),
+      data: this.buildRequestItems(data, requestItems)
     }
   }
 }
 
-export default function ({ $axios }, inject) {
+class MockedAxiosConfig extends AxiosConfig {
+  buildPath (path) {
+    return path
+  }
+}
+
+function createAxiosConfig (app) {
+  if (app.context.env.USE_MOCK_API) {
+    return new MockedAxiosConfig()
+  }
+
+  return new AxiosConfig()
+}
+
+export default function ({ $axios, app }, inject) {
   const api = (action, requestItems) => {
     const definitions = apiDefinitions[action]
     if (!definitions) {
       throw new Error(`API "${action}" not found!`)
     }
-    const axiosConfig = new AxiosConfig(definitions, requestItems)
-    return $axios.$request({ ...axiosConfig.build() })
+    const axiosConfig = createAxiosConfig(app)
+    return $axios.$request({ ...axiosConfig.build(definitions, requestItems) })
   }
   inject('api', api)
 }
