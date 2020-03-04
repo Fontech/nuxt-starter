@@ -57,6 +57,8 @@ export default {
   */
   plugins: [
     '@/plugins/api',
+    '@/plugins/container.js',
+    '@/plugins/helpers.js',
     <%_ if (ui === 'element-ui') { _%>
     '@/plugins/element-ui'
     <%_ } else if (ui === 'iview') { _%>
