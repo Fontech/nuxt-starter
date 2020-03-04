@@ -1,4 +1,4 @@
-// import auth from './auth'
+import auth from './auth'
 
 class Resources {
   setApp (app) {
@@ -20,6 +20,6 @@ class Resources {
 
 const resources = new Resources()
 
-// resources.register('auth', auth)
+resources.register('auth', auth)
 
 export default resources
