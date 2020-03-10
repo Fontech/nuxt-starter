@@ -7,7 +7,7 @@ const runTransition = async () => {
 
   try {
     await window.$nuxt.$modal.close()
-  } catch {
+  } catch (error) {
     // maybe there is no modal opened
   }
 
@@ -50,8 +50,8 @@ export default {
         maxAge: 60 * 60 * 24 * 30 // 30 days
       })
     },
-    async login ({ dispatch }, { email, password, provider, accessToken }) {
-      const response = await this.$resources.auth.login({ email, password, provider, accessToken })
+    async login ({ dispatch }, { email, password }) {
+      const response = await this.$resources.auth.login({ email, password })
 
       await dispatch('setAccessTokenFromResponse', response)
       await runTransition()
@@ -60,6 +60,6 @@ export default {
       await this.$resources.auth.logout()
       await dispatch('removeAccessToken')
       await runTransition()
-    },
+    }
   }
 }
