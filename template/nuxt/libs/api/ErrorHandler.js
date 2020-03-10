@@ -1,4 +1,4 @@
-// import { SnackbarProgrammatic as Snackbar } from 'buefy'
+import { SnackbarProgrammatic as Snackbar } from 'buefy'
 import { debug } from '~/libs/helpers'
 
 const getErrorMessage = ({ message }) => {
@@ -49,15 +49,13 @@ export default class ErrorHandler {
       const i18nKey = getErrorI18nKey(response.data)
       const message = i18n.t(i18nKey) || e.toString()
 
-      alert(message)
-
-      // Snackbar.open({
-      //   message,
-      //   duration: 5000,
-      //   type: 'is-danger',
-      //   position: 'is-top',
-      //   actionText: 'X'
-      // })
+      Snackbar.open({
+        message,
+        duration: 5000,
+        type: 'is-danger',
+        position: 'is-top',
+        actionText: 'X'
+      })
     }
 
     throw e
