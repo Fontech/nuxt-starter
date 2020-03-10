@@ -75,6 +75,7 @@
     "@startingpoint/stylint-webpack-plugin": "^0.2.3",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
-    "vue-jest": "^4.0.0-0"
+    "vue-jest": "^4.0.0-0",
+    "axios-mock-adapter": "^1.17.0"
   }
 }
