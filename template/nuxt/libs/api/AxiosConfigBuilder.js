@@ -1,23 +1,23 @@
 export default class AxiosConfigBuilder {
   buildRequestItems (definitions, requestItems) {
     const result = {}
-    for (const key in definitions) {
-      const { required, default: defaultValue } = definitions[key]
-      const value = requestItems[key] || defaultValue
 
-      if (required && !value) {
+    for (const key in definitions) {
+      const { required } = definitions[key]
+      const value = requestItems[key]
+      const valueIsEmpty = value === undefined
+
+      if (required && valueIsEmpty) {
         throw new Error(`${key} is required.`)
       }
 
-      if (required) {
-        result[key] = value
+      if (valueIsEmpty) {
         continue
       }
 
-      if (requestItems[key]) {
-        result[key] = requestItems[key]
-      }
+      result[key] = value
     }
+
     return result
   }
 
