@@ -1,5 +1,20 @@
 const ACCESS_TOKEN_COOKIE_NAME = 'token'
 
+const runTransition = async () => {
+  if (process.server) {
+    return
+  }
+
+  try {
+    await window.$nuxt.$modal.close()
+  } catch {
+    // maybe there is no modal opened
+  }
+
+  window.$nuxt.$loading.start()
+  document.location.reload()
+}
+
 export default {
   state: {
     accessToken: null
@@ -34,6 +49,17 @@ export default {
         path: '/',
         maxAge: 60 * 60 * 24 * 30 // 30 days
       })
-    }
+    },
+    async login ({ dispatch }, { email, password, provider, accessToken }) {
+      const response = await this.$resources.auth.login({ email, password, provider, accessToken })
+
+      await dispatch('setAccessTokenFromResponse', response)
+      await runTransition()
+    },
+    async logout ({ dispatch }) {
+      await this.$resources.auth.logout()
+      await dispatch('removeAccessToken')
+      await runTransition()
+    },
   }
 }
